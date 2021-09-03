@@ -1,7 +1,7 @@
 # https://github.com/docker-library/postgres/blob/master/12/alpine/Dockerfile
 FROM postgres:12.5-alpine
 
-MAINTAINER Ivan Muratov, binakot@gmail.com
+MAINTAINER Anastasia Lukina, anastasia.lukina.es@gmail.com
 
 # https://postgis.net/docs/manual-3.1/postgis_installation.html
 ENV POSTGIS_VERSION 3.1.1
@@ -107,6 +107,8 @@ RUN set -ex \
     && rm -rf /usr/src/timescaledb \
     && apk del .fetch-deps .build-deps \
     && sed -r -i "s/[#]*\s*(shared_preload_libraries)\s*=\s*'(.*)'/\1 = 'timescaledb,\2'/;s/,'/'/" /usr/local/share/postgresql/postgresql.conf.sample
+
+
 
 COPY ./init-postgis.sh /docker-entrypoint-initdb.d/1.postgis.sh
 COPY ./init-timescaledb.sh /docker-entrypoint-initdb.d/2.timescaledb.sh
